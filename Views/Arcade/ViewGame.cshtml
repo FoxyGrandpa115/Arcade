@@ -1,0 +1,70 @@
+@model Game
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css"/>
+    <title>View Game</title>
+</head>
+
+<a href="/dashboardredirect/@ViewBag.ThisUser.userId">Dashboard</a>
+<a href="/">Logout</a>
+
+
+<div id="View">
+<h1>@ViewBag.Game.Title
+</h1>
+<br>
+@{
+    if(@ViewBag.Game.Imagename != null){
+        <img class="basesize" src="/img/@ViewBag.Game.Imagename" alt="Game Image">
+    }
+}
+<h4>
+<br>Description:</h4>
+<p>@ViewBag.Game.Description</p>
+<h2>Created on: @ViewBag.Game.CreatedAt</h2>
+<h2>Updated on: @ViewBag.Game.UpdatedAt</h2>
+<h3>Likes:
+    @{
+        if(ViewBag.PlayersCount != 0){
+    @foreach(var player in ViewBag.Players)
+    {
+        
+        <li>@player.User.FirstName </li>
+        @if(player.User == ViewBag.User)
+        {
+            <p>(Author)</p>
+        }
+    }
+        }else{
+            <h3>No likes :(</h3>
+        }
+        
+       
+    <a asp-action="RSVP" asp-route-gameId="@ViewBag.Game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="remove">Remove Like</a>
+    <br>
+    <a asp-action="RSVP" asp-route-gameId="@ViewBag.Game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="add">Like</a>
+    <br>
+    @* <a asp-action="RSVP" asp-route-gameId="@ViewBag.Game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="comment">Comment</a> *@
+    }
+    <br>
+    @* Comments:
+    @{
+        if(ViewBag.CommentsCount != 0){
+    @foreach(var player in ViewBag.Comments)
+    {
+        
+        <li>@player.Comment.name said "@player.Comment.comment" </li>
+        @if(player.User == ViewBag.User)
+        {
+        }
+    }
+        }else{
+            <h3>No Comments :(</h3>
+        }
+    } *@
+    <br>
+</h3>
+</div>
+

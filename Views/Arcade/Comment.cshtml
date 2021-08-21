@@ -1,0 +1,29 @@
+@using Arcade.Models
+@model Comment
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css"/>
+    <title>Add Comment</title>
+</head>
+
+<h1>Post a Comment!</h1>
+<body id="wrap">
+    <div class="box">
+        <form asp-action="CreateComment" asp-controller="Arcade" method="post">
+        <span asp-validation-for="name"></span>
+        <label asp-for="name">Name: </label>
+        <input asp-for="name"><br>
+        <span asp-validation-for="comment"></span>
+        <label asp-for="comment">Comment:</label>
+        <input asp-for="comment"><br><br>
+        <input value="Post!" type="submit"><br>
+        </form>
+        <form asp-action="ViewGame" asp-controller="Arcade" method="get">
+         <button type="submit">Back to Game</button>
+        </form>
+</div>
+</body>
+

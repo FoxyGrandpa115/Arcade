@@ -1,0 +1,96 @@
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css"/>
+    <title>User Dashboard</title>
+</head>
+<h1>Jason's Arcade</h1>
+
+
+
+
+@{
+    DateTime Current = DateTime.Now;
+<div class="flex">
+    <div class="left">
+@Current.ToString("hh:mm tt")
+    </div>
+ <div class="right">
+<a href="/">Logout</a>
+    </div>
+</div>
+   
+}
+<h3>Welcome @ViewBag.ThisUser.Username!</h3>
+<body id="wrap">
+    
+<div class="flex">
+    <div class="navleft">
+        <a href="/Game/@ViewBag.ThisUser.userId">New Game</a>
+    </div>
+<div class="right">
+    <ul>
+        @{
+            if(ViewBag.AllGamesCount != 0)
+            {
+                @foreach(var game in ViewBag.AllGames)
+                {
+                        var list = ((IEnumerable<dynamic>)game.Authors);
+                        var likes = ((IEnumerable<dynamic>)game.Likes);
+                        var count = list.Count();
+                        //var count_L = likes.Count();
+                        //var likes_count = likes.Count();
+                    <table id="List">
+                    <tr>
+                        <th>Image</th>
+                        <th>Title</th>
+                        @* <th>Short Description</th> *@
+                        <th>Likes</th> 
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>@{
+                            if(@game.Imagename != null){
+                                <img class="resize" src="/img/@game.Imagename" alt="Game Image">
+                            }
+                        }
+
+                        </td>
+                        <td><a href="/viewgame/@game.GameId/@ViewBag.ThisUser.userId">@game.Title</a></td>
+                        @* <td>@l.Description</td> maybe images can go in here *@
+                        <td>@count</td>
+                        <td>
+                            @{
+                            var a = ((IEnumerable<dynamic>)game.Authors).Any(r => r.UserId == @ViewBag.ThisUser.userId);
+
+                            if(game.UserId == ViewBag.ThisUser.userId)
+                            {
+                                <a asp-action="RSVP" asp-route-gameId="@game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="delete">DELETE</a>
+                                <a href="/@game.GameId/@ViewBag.ThisUser.userId/edit">EDIT</a>
+                            }
+                             else if(a)   @*(l.Associations.Any(r => r.UserId == ViewBag.ThisUser.UserId)) *@
+                            {
+                                <a asp-action="RSVP" asp-route-gameId="@game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="remove">Remove Like</a>
+                            }
+                            else
+                            {                                
+                                <a asp-action="RSVP" asp-route-gameId="@game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="add">Like</a>
+                            }
+                            }
+                        </td>
+                    </tr>
+                    </table>
+                } 
+            }
+            else
+            {
+                <p>No Games Here.</p>
+            }
+        }
+    
+    </ul>
+</div>
+</div>
+</body>
+
