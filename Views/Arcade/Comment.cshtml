@@ -19,7 +19,7 @@
         <span asp-validation-for="comment"></span>
         <label asp-for="comment">Comment:</label>
         <input asp-for="comment"><br><br>
-        <input value="Post!" type="submit"><br>
+        <a asp-action="RSVP" asp-route-gameId="@ViewBag.Game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="comment"><button class="btn-primary btn" style="float: right;">Add Comment</button></a>
         </form>
         <form asp-action="ViewGame" asp-controller="Arcade" method="get">
          <button type="submit">Back to Game</button>

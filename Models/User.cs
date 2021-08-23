@@ -25,7 +25,6 @@ namespace Arcade.Models
         [MinLength(2,
         ErrorMessage = "Last Name must be at least 2 characters")]
         public string LastName { get; set; }
-        public string Hobby_Proficiency { get; set; }
 
         [Required(
         ErrorMessage = "This field is required")]

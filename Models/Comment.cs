@@ -6,6 +6,8 @@ namespace Arcade.Models
         [Key]
         public int CommentId { get; set; }
         public int GameId { get; set; }
+        public int UserId { get; set; }
+
 
         [Required(
         ErrorMessage = "This field is required")]

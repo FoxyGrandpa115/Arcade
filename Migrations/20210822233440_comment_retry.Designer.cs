@@ -3,14 +3,16 @@ using System;
 using Arcade.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Arcade.Migrations
 {
     [DbContext(typeof(Arcade_Context))]
-    partial class Arcade_ContextModelSnapshot : ModelSnapshot
+    [Migration("20210822233440_comment_retry")]
+    partial class comment_retry
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

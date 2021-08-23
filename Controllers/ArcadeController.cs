@@ -96,8 +96,8 @@ namespace Arcade.Controllers
             var _game = _context.Games.FirstOrDefault(b => b.GameId == gameId);
             var players = _context.Associations.Include(a => a.User).Include(b => b.Game).Where(b => b.GameId == gameId);
             var playersCount = players.Count();
-            var comments = _context.Comments.Include(a => a.User).Include(b => b.Game).Where(b => b.GameId == gameId);
-            var commentsCount = comments.Count();
+            //var comments = _context.Comments.Include(a => a.User).Include(b => b.Game).Where(b => b.GameId == gameId);
+            //var commentsCount = comments.Count();
             var total = _context.Games.Count();
             var totalLikes = _context.Associations.Count();
             var userInDb = _context.Users.FirstOrDefault(b => b.userId == userId);
@@ -111,8 +111,8 @@ namespace Arcade.Controllers
             ViewData["AllLikesCount"] = totalLikes;
             ViewData["PlayersCount"] = playersCount;
             ViewData["Players"] = players;
-            ViewData["CommentsCount"] = commentsCount;
-            ViewData["Comments"] = comments;
+            //ViewData["CommentsCount"] = commentsCount;
+            //ViewData["Comments"] = comments;
             ViewData["AllGames"] = _context.Games.Include(x => x.Authors);
             ViewData["AllLikes"] = _context.Games.Include(x => x.Likes);
         }
@@ -122,8 +122,8 @@ namespace Arcade.Controllers
             var _game = _context.Games.FirstOrDefault(b => b.GameId == gameId);
             var players = _context.Associations.Include(a => a.User).Include(b => b.Game).Where(b => b.GameId == gameId);
             var playersCount = players.Count();
-            var comments = _context.Comments.Include(a => a.User).Include(b => b.Game).Where(b => b.GameId == gameId);
-            var commentsCount = comments.Count();
+            //var comments = _context.Comments.Include(a => a.User).Include(b => b.Game).Where(b => b.GameId == gameId);
+            //var commentsCount = comments.Count();
             var total = _context.Games.Count();
             var totalLikes = _context.Associations.Count();
             var userInDb = _context.Users.FirstOrDefault(b => b.userId == userId);
@@ -137,8 +137,8 @@ namespace Arcade.Controllers
             ViewData["AllLikesCount"] = totalLikes;
             ViewData["PlayersCount"] = playersCount;
             ViewData["Players"] = players;
-            ViewData["CommentsCount"] = commentsCount;
-            ViewData["Comments"] = comments;
+            //ViewData["CommentsCount"] = commentsCount;
+            //ViewData["Comments"] = comments;
             ViewData["AllGames"] = _context.Games.Include(x => x.Authors);
             ViewData["AllLikes"] = _context.Games.Include(x => x.Likes);
         }
@@ -229,13 +229,13 @@ namespace Arcade.Controllers
             ViewBag.ThisUser = ThisUser;
             return View();
         }
+
         [HttpPost("creategame")]
         public IActionResult CreateGame(Game game, int userId)
         {
             Initialize_G(game, userId);//initializations
             var ThisUser = _context.Users.FirstOrDefault(b => b.userId == userId);
             var img = game.Image;
-            var imgName = Path.GetFileName(game.Image.FileName);
             ViewBag.ThisUser = ThisUser;
             if (_context.Games.Any(u => u.Title == game.Title))//unique game validation
             {
@@ -247,6 +247,8 @@ namespace Arcade.Controllers
                 //geting image
                 if (game.Image != null)
                 {
+
+                    var imgName = Path.GetFileName(game.Image.FileName);
                     var uniqueFileName = GetUniqueFileName(game.Image.FileName);
                     var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
                     var filePath = Path.Combine(uploads, uniqueFileName);
@@ -257,7 +259,7 @@ namespace Arcade.Controllers
                 }
 
                 //adding game
-
+                Console.WriteLine(game.Title);
                 _context.Add(game);
                 _context.SaveChanges();
                 ViewBag.Game = game;
@@ -279,27 +281,25 @@ namespace Arcade.Controllers
                       + Path.GetExtension(fileName);
         }
         [HttpPost("create_comment")]
-        public IActionResult CreateComment(Association _comment, int userId, int gameId)
+        public IActionResult CreateComment(string content, int userId, int gameId)
         {
-            Initialize_Com(gameId, userId, _comment);
+            //Association model = _context.Comments.FirstOrDefault(h => h.GameId == gameId);
             var ThisUser = _context.Users.FirstOrDefault(b => b.userId == userId);
             ViewBag.ThisUser = ThisUser;
-            Association model = _context.Comments.FirstOrDefault(h => h.GameId == gameId);
-
+            var list = content;
+            ViewBag.CommentContent = list;
 
             if (ModelState.IsValid)
             {
-                _context.Associations.Add(_comment);
+                Console.WriteLine(content);
                 _context.SaveChanges();
-                ViewBag.Comment = _comment;
-                Comment(gameId, userId);//adding creator to comment pool.
-                return View("ViewGame");
+                return View("Index");
             }
             else
             {
                 //something went wrong, return a view to maintain model state
-                Console.WriteLine("error, returning to model");
-                return View("Comment");
+                Console.WriteLine("error creating comment, returning to model");
+                return View("Index");
             }
         }
         [HttpGet("{gameId}/{userId}/edit")]
@@ -338,17 +338,7 @@ namespace Arcade.Controllers
             }
             return View("Edit", game);
         }
-        [HttpGet("{gameId}/{userId}/comment")]
-        public IActionResult Comment(int gameId, Game game, int userId)//commenting
-        {
-            var ThisUser = _context.Users.FirstOrDefault(b => b.userId == userId);
-            ViewBag.ThisUser = ThisUser;
-            Initialize_G(game, userId);
-            Association model = _context.Comments.FirstOrDefault(h => h.GameId == gameId);
-            if (model == null)
-                return RedirectToAction("Index");
-            return View(model);
-        }
+        
         [HttpGet("/dashboardredirect/{userId}")]
         public IActionResult DashBoardRedirect(int gameId, int userId)
         {
@@ -366,7 +356,7 @@ namespace Arcade.Controllers
 
 
         [HttpGet("game/{gameId}/{userId}/{status}")]
-        public IActionResult RSVP(int gameId, int userId, string status, Game game, User user)
+        public IActionResult RSVP(int gameId, int userId, string status, Game game, User user, Comment comment)
         {
             var userInDb = _context.Users.FirstOrDefault(b => b.userId == userId);
             var game_ = _context.Games.FirstOrDefault(b => b.GameId == gameId);
@@ -416,7 +406,9 @@ namespace Arcade.Controllers
             }
             else if (status == "comment")
             {
-                return View("Comment");
+                Console.WriteLine("Comment added");
+                ViewBag.Comment = comment;
+                AddComment(gameId, userId);
             }
 
             else
@@ -447,10 +439,10 @@ namespace Arcade.Controllers
             _context.Likes.Add(newLike);
             _context.SaveChanges();
         }
-        private void Comment(int gameId, int userId)
+        private void AddComment(int gameId, int userId)
         {
             var userInDb = _context.Users.FirstOrDefault(b => b.userId == userId);
-            Association newComment = new Association()
+            Comment newComment = new Comment()
             {
                 GameId = gameId,
                 UserId = userInDb.userId

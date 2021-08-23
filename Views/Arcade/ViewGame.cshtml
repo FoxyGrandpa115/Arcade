@@ -3,9 +3,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css"/>
-    <title>View Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+        <title>View Game</title>
 </head>
+
+<html>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
 <a href="/dashboardredirect/@ViewBag.ThisUser.userId">Dashboard</a>
 <a href="/">Logout</a>
@@ -17,7 +23,7 @@
 <br>
 @{
     if(@ViewBag.Game.Imagename != null){
-        <img class="basesize" src="/img/@ViewBag.Game.Imagename" alt="Game Image">
+        <img style="width: 800px; height: 800px" class="basesize" src="/img/@ViewBag.Game.Imagename" alt="Game Image">
     }
 }
 <h4>
@@ -49,22 +55,32 @@
     @* <a asp-action="RSVP" asp-route-gameId="@ViewBag.Game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="comment">Comment</a> *@
     }
     <br>
-    @* Comments:
-    @{
-        if(ViewBag.CommentsCount != 0){
-    @foreach(var player in ViewBag.Comments)
-    {
-        
-        <li>@player.Comment.name said "@player.Comment.comment" </li>
-        @if(player.User == ViewBag.User)
-        {
-        }
-    }
-        }else{
-            <h3>No Comments :(</h3>
-        }
-    } *@
+    <div class="container">
+        <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+            <div class="col-md-12">
+                <textarea class="form-control" placeholder="Add public comment" cols="30" rows="3"></textarea>
+                <button class="btn-primary btn" style="float: right;">Add Comment</button>
+            </div>
+        </div>
+    </div>
+        <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="userComments">
+                    <div class="comment">
+                        <div class="user"><span class="time"></span></div>
+                        <div class="userComment"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <br>
 </h3>
 </div>
+</body>
+</html>
+
+
+    
 
