@@ -240,7 +240,7 @@ namespace Arcade.Controllers
             var ThisUser = _context.Users.FirstOrDefault(b => b.userId == userId);
             var img = game.Image;
             ViewBag.ThisUser = ThisUser;
-            ViewData["AllComments"] =  _context.Comments.Include(s => s.Authors).Where(a => a.GameId == game.GameId);
+            ViewBag.AllC = _context.Comments.Include(s => s.Authors).Where(a => a.GameId == game.GameId);
             if (_context.Games.Any(u => u.Title == game.Title))//unique game validation
             {
                 ModelState.AddModelError("Title", "Game Name already exists.");
@@ -304,7 +304,7 @@ namespace Arcade.Controllers
             commentlist.Add(game.Comment);
             _context.Add(r);
             _context.SaveChanges();
-            ViewBag.AllC =  _context.Comments.Include(s => s.Authors).Where(a => a.GameId == gameId);
+            ViewBag.AllC = _context.Comments.Include(s => s.Authors).Where(a => a.GameId == gameId);
             ViewData["Comment"] = content;
             //list.Add(content);
 
@@ -363,7 +363,7 @@ namespace Arcade.Controllers
         [HttpGet("viewgame/{gameId}/{userId}")]
         public IActionResult ViewGame(int gameId, int userId)
         {
-            ViewBag.AllC =  _context.Comments.Include(s => s.Authors).Where(a => a.GameId == gameId);
+            ViewBag.AllC = _context.Comments.Include(s => s.Authors).Where(a => a.GameId == gameId);
             ViewBag.CommentsCount = _context.Comments.Count();
             ViewBag.AllComments = _context.Games.Include(x => x.Comments);
             Initialize_Assoc(gameId, userId);
@@ -379,6 +379,8 @@ namespace Arcade.Controllers
             var userInList = _context.Games.Any(u => u.Authors == game.Authors);
             var authors = _context.Associations.Include(a => a.User).Include(b => b.Game).Where(b => b.GameId == gameId);
             var likes = _context.Likes.Include(a => a.User).Include(b => b.Game).Where(a => a.UserId == userId);
+            ViewBag.AllC = _context.Comments.Include(s => s.Authors).Where(a => a.GameId == gameId);
+
             Initialize_Assoc(gameId, userId);
             if (userInDb == null)
                 return RedirectToAction("Index");
