@@ -55,21 +55,37 @@
     @* <a asp-action="RSVP" asp-route-gameId="@ViewBag.Game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="comment">Comment</a> *@
     }
     <br>
+    <form asp-action="createcomment" method="post" enctype="multipart/form-data">
+
     <div class="container">
         <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
             <div class="col-md-12">
-                <textarea class="form-control" placeholder="Add public comment" cols="30" rows="3"></textarea>
-                <button class="btn-primary btn" style="float: right;">Add Comment</button>
+                <textarea asp-for="Comment" class="form-control" placeholder="Add public comment" cols="30" rows="3"></textarea>
+                <button  class="btn-primary btn" style="float: right;">Add Comment</button>
             </div>
         </div>
     </div>
+    </form> 
+
         <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="userComments">
                     <div class="comment">
                         <div class="user"><span class="time"></span></div>
-                        <div class="userComment"></div>
+                        <div class="userComment">
+                            @{
+                                if(ViewBag.CommentsCount != 0){
+                            @foreach(var comment in ViewBag.AllC)
+                            {                                
+                                <p>"@comment.comment"</p> 
+                                <p>Written by: @comment.name</p>
+                            }
+                                }else{
+                                    <h3>No comments :(</h3>
+                                }
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

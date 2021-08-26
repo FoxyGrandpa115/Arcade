@@ -23,6 +23,9 @@ namespace Arcade.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int?>("CommentId")
+                        .HasColumnType("int");
+
                     b.Property<int>("GameId")
                         .HasColumnType("int");
 
@@ -30,6 +33,8 @@ namespace Arcade.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("AssociationId");
+
+                    b.HasIndex("CommentId");
 
                     b.HasIndex("GameId");
 
@@ -136,6 +141,10 @@ namespace Arcade.Migrations
 
             modelBuilder.Entity("Arcade.Models.Association", b =>
                 {
+                    b.HasOne("Arcade.Models.Comment", null)
+                        .WithMany("Authors")
+                        .HasForeignKey("CommentId");
+
                     b.HasOne("Arcade.Models.Game", "Game")
                         .WithMany("Authors")
                         .HasForeignKey("GameId")

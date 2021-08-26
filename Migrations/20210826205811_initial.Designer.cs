@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Arcade.Migrations
 {
     [DbContext(typeof(Arcade_Context))]
-    [Migration("20210821195403_comments")]
-    partial class comments
+    [Migration("20210826205811_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -38,6 +38,33 @@ namespace Arcade.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Association");
+                });
+
+            modelBuilder.Entity("Arcade.Models.Comment", b =>
+                {
+                    b.Property<int>("CommentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("comment")
+                        .IsRequired()
+                        .HasColumnType("varchar(45) CHARACTER SET utf8mb4")
+                        .HasMaxLength(45);
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("varchar(45) CHARACTER SET utf8mb4")
+                        .HasMaxLength(45);
+
+                    b.HasKey("CommentId");
+
+                    b.ToTable("Comments");
                 });
 
             modelBuilder.Entity("Arcade.Models.Game", b =>
@@ -86,9 +113,6 @@ namespace Arcade.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<string>("Hobby_Proficiency")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("LastName")

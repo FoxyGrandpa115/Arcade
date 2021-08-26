@@ -21,12 +21,13 @@ namespace Arcade.Models
        ErrorMessage = "This field is required")]
         public string Description { get; set; }
         public int UserId { get; set; }
-        public List<Association> Authors {get;set;}
+        public List<Association> Authors { get; set; }
         [NotMapped]
-        public List<Association> Likes {get;set;}
+        public List<Association> Likes { get; set; }
         [NotMapped]
-        public List<String> Comments{ get; set; }
-
+        public List<String> Comments { get; set; }
+        [NotMapped]
+        public String Comment { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
 

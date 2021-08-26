@@ -80,6 +80,8 @@ namespace Arcade.Controllers
         public void Initialize_G(Game game, int userId)//varaibles and viewbags for hobbies
         {
             //variables
+            //ViewBag.CommentsCount = game.Comments.Count();
+            //ViewData["AllComments"] = game.Comments;
             var players = _context.Associations.Include(a => a.User).Include(b => b.Game).Where(b => b.GameId == game.GameId);
             var playersCount = players.Count();
             var userInDb = _context.Users.FirstOrDefault(b => b.userId == userId);
@@ -93,6 +95,7 @@ namespace Arcade.Controllers
         public void Initialize_Assoc(int gameId, int userId)//varaibles and viewbags for associations
         {
             //variables
+
             var _game = _context.Games.FirstOrDefault(b => b.GameId == gameId);
             var players = _context.Associations.Include(a => a.User).Include(b => b.Game).Where(b => b.GameId == gameId);
             var playersCount = players.Count();
@@ -237,6 +240,7 @@ namespace Arcade.Controllers
             var ThisUser = _context.Users.FirstOrDefault(b => b.userId == userId);
             var img = game.Image;
             ViewBag.ThisUser = ThisUser;
+            ViewData["AllComments"] =  _context.Comments.Include(s => s.Authors).Where(a => a.GameId == game.GameId);
             if (_context.Games.Any(u => u.Title == game.Title))//unique game validation
             {
                 ModelState.AddModelError("Title", "Game Name already exists.");
@@ -280,27 +284,36 @@ namespace Arcade.Controllers
                       + Guid.NewGuid().ToString().Substring(0, 4)
                       + Path.GetExtension(fileName);
         }
-        [HttpPost("create_comment")]
-        public IActionResult CreateComment(string content, int userId, int gameId)
+        [HttpPost("comment/{userId}/{gameId}")]
+        public IActionResult CreateComment(Game game, int userId, int gameId)
         {
             //Association model = _context.Comments.FirstOrDefault(h => h.GameId == gameId);
+            Initialize_G(game, userId);
+            var prevComments = game.Comment;
             var ThisUser = _context.Users.FirstOrDefault(b => b.userId == userId);
             ViewBag.ThisUser = ThisUser;
-            var list = content;
-            ViewBag.CommentContent = list;
+            var commentlist = new List<String>();
+            var content = game.Comment;
+            var list = game.Comments;
+            //attempt
+            Comment r = new Comment();
+            r.comment = content;
+            r.name = ThisUser.FirstName;
+            r.UserId = userId;
+            r.GameId = gameId;
+            commentlist.Add(game.Comment);
+            _context.Add(r);
+            _context.SaveChanges();
+            ViewBag.AllC =  _context.Comments.Include(s => s.Authors).Where(a => a.GameId == gameId);
+            ViewData["Comment"] = content;
+            //list.Add(content);
 
-            if (ModelState.IsValid)
-            {
-                Console.WriteLine(content);
-                _context.SaveChanges();
-                return View("Index");
-            }
-            else
-            {
-                //something went wrong, return a view to maintain model state
-                Console.WriteLine("error creating comment, returning to model");
-                return View("Index");
-            }
+            Console.WriteLine(content);
+            Console.WriteLine(commentlist.LastOrDefault());
+            //game.Comments.Add(game.Comments.Last());
+            _context.SaveChanges();
+            return View("ViewGame");
+
         }
         [HttpGet("{gameId}/{userId}/edit")]
         public IActionResult Edit(int gameId, Game game, int userId)//editing previous entry
@@ -338,7 +351,7 @@ namespace Arcade.Controllers
             }
             return View("Edit", game);
         }
-        
+
         [HttpGet("/dashboardredirect/{userId}")]
         public IActionResult DashBoardRedirect(int gameId, int userId)
         {
@@ -350,6 +363,9 @@ namespace Arcade.Controllers
         [HttpGet("viewgame/{gameId}/{userId}")]
         public IActionResult ViewGame(int gameId, int userId)
         {
+            ViewBag.AllC =  _context.Comments.Include(s => s.Authors).Where(a => a.GameId == gameId);
+            ViewBag.CommentsCount = _context.Comments.Count();
+            ViewBag.AllComments = _context.Games.Include(x => x.Comments);
             Initialize_Assoc(gameId, userId);
             return View();
         }

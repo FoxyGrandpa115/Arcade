@@ -1,4 +1,9 @@
+using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Arcade.Models
 {
     public class Comment
@@ -23,7 +28,7 @@ namespace Arcade.Models
         [MaxLength(45,
         ErrorMessage = "Too Long!")]
         public string comment { get; set; }
-
+        public List<Association> Authors { get; set; }
     }
 
 }

@@ -9,6 +9,22 @@ namespace Arcade.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    CommentId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    GameId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    name = table.Column<string>(maxLength: 45, nullable: false),
+                    comment = table.Column<string>(maxLength: 45, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.CommentId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Games",
                 columns: table => new
                 {
@@ -36,7 +52,6 @@ namespace Arcade.Migrations
                     UpdatedAt = table.Column<DateTime>(nullable: false),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
-                    Hobby_Proficiency = table.Column<string>(nullable: true),
                     Username = table.Column<string>(maxLength: 15, nullable: false),
                     Email = table.Column<string>(nullable: false),
                     Password = table.Column<string>(nullable: false)
@@ -87,6 +102,9 @@ namespace Arcade.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Association");
+
+            migrationBuilder.DropTable(
+                name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "Games");
