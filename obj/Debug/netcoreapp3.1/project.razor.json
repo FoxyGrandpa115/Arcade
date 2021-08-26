@@ -14447,6 +14447,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\jason\\Documents\\WOS Enterprises\\HW Assignments\\Arcade\\Views\\Arcade\\Success.cshtml",
+      "TargetPath": "Views\\Arcade\\Success.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\jason\\Documents\\WOS Enterprises\\HW Assignments\\Arcade\\Views\\Arcade\\ViewGame.cshtml",
       "TargetPath": "Views\\Arcade\\ViewGame.cshtml",
       "FileKind": "mvc"

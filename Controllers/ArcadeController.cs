@@ -240,6 +240,7 @@ namespace Arcade.Controllers
             var ThisUser = _context.Users.FirstOrDefault(b => b.userId == userId);
             var img = game.Image;
             ViewBag.ThisUser = ThisUser;
+
             ViewBag.AllC = _context.Comments.Include(s => s.Authors).Where(a => a.GameId == game.GameId);
             if (_context.Games.Any(u => u.Title == game.Title))//unique game validation
             {
@@ -268,7 +269,7 @@ namespace Arcade.Controllers
                 _context.SaveChanges();
                 ViewBag.Game = game;
                 AddEnthusiast(game.GameId, userId);//adding creator to enthusiast pool.
-                return View("ViewGame");
+                return View("Success");
             }
             else
             {
@@ -276,6 +277,12 @@ namespace Arcade.Controllers
                 return View("Game");
             }
         }
+        [HttpPost("success")]
+        public IActionResult Success()
+        {
+            return View();
+        }
+
         private string GetUniqueFileName(string fileName)
         {
             fileName = Path.GetFileName(fileName);

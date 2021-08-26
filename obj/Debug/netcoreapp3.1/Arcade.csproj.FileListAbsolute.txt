@@ -69,3 +69,4 @@ C:\Users\jason\Documents\WOS Enterprises\HW Assignments\Arcade\obj\Debug\netcore
 C:\Users\jason\Documents\WOS Enterprises\HW Assignments\Arcade\obj\Debug\netcoreapp3.1\Razor\Views\Arcade\Unauthorized.cshtml.g.cs
 C:\Users\jason\Documents\WOS Enterprises\HW Assignments\Arcade\obj\Debug\netcoreapp3.1\Razor\Views\Arcade\Comment.cshtml.g.cs
 C:\Users\jason\Documents\WOS Enterprises\HW Assignments\Arcade\obj\Debug\netcoreapp3.1\Razor\Views\Arcade\Edit.cshtml.g.cs
+C:\Users\jason\Documents\WOS Enterprises\HW Assignments\Arcade\obj\Debug\netcoreapp3.1\Razor\Views\Arcade\Success.cshtml.g.cs
