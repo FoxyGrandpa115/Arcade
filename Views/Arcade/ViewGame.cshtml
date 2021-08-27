@@ -80,7 +80,7 @@
                 <div class="userComments">
                     <div class="comment">                      
                         
-@{
+                            @{
                                 if(ViewBag.CommentsCount != 0){
                             @foreach(var comment in ViewBag.AllC)
                             {       
@@ -88,8 +88,12 @@
                                 <div class="userComment">               
                                 <p>"@comment.comment"</p> 
                                 </div>
+                                @if(ViewBag.ThisUser.FirstName == comment.name){
+                                    <a asp-action="RSVP" asp-route-commentId="@comment.CommentId" asp-route-gameId="@comment.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="com_delete"><button class="btn-danger btn" style="float: right;margin-top: -55px">Delete</button></a>
+                                }
                                 <div class="user"><span class="time"></span><p style="text-align: right; text-style: italic;font-size:12pt" class="text-right"><i>Written by @comment.name on: <br>@comment.CreatedAt.ToString("MMMM dd, yyyy hh:mm tt")</i></p></div>
                                 </div>
+                                
                             }
                                 }else{
                                     <h3>No comments :(</h3>

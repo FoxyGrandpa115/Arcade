@@ -212,7 +212,7 @@ namespace Arcade.Controllers
         [HttpGet("userdashboard/{userId}")]
         public IActionResult UserDashboard(LoginUser user)
         {
-            
+
             if (ModelState.IsValid)
             {
                 var userInDb = _context.Users.FirstOrDefault(u => u.Email == user.Email);
@@ -320,7 +320,7 @@ namespace Arcade.Controllers
             Console.WriteLine(commentlist.LastOrDefault());
             //game.Comments.Add(game.Comments.Last());
             _context.SaveChanges();
-            return View("ViewGame");
+            return RedirectToAction("ViewGame");
 
         }
         [HttpGet("{gameId}/{userId}/edit")]
@@ -363,7 +363,7 @@ namespace Arcade.Controllers
         [HttpGet("/dashboardredirect/{userId}")]
         public IActionResult DashBoardRedirect(int gameId, int userId)
         {
-            
+
             var userInDb = _context.Users.FirstOrDefault(b => b.userId == userId);
             Initialize_Assoc(gameId, userId);
             return View("UserDashboard", userInDb);
@@ -382,10 +382,11 @@ namespace Arcade.Controllers
 
 
         [HttpGet("game/{gameId}/{userId}/{status}")]
-        public IActionResult RSVP(int gameId, int userId, string status, Game game, User user, Comment comment)
+        public IActionResult RSVP(int gameId, int userId, string status, int commentId, Game game, User user, Comment comment)
         {
             var userInDb = _context.Users.FirstOrDefault(b => b.userId == userId);
             var game_ = _context.Games.FirstOrDefault(b => b.GameId == gameId);
+            var comment_ = _context.Comments.FirstOrDefault(b => b.CommentId == commentId);
             var userInList = _context.Games.Any(u => u.Authors == game.Authors);
             var authors = _context.Associations.Include(a => a.User).Include(b => b.Game).Where(b => b.GameId == gameId);
             var likes = _context.Likes.Include(a => a.User).Include(b => b.Game).Where(a => a.UserId == userId);
@@ -412,6 +413,13 @@ namespace Arcade.Controllers
             {
                 //Removing the game from the database
                 _context.Games.Remove(game_);
+                _context.SaveChanges();
+            }
+            else if (status == "com_delete")
+            {
+                //Removing the comment from the database
+                Console.WriteLine("Comment deleted");
+                _context.Comments.Remove(comment_);
                 _context.SaveChanges();
             }
             else if (status == "edit")
