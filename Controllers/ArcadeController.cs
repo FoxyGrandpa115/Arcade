@@ -212,6 +212,7 @@ namespace Arcade.Controllers
         [HttpGet("userdashboard/{userId}")]
         public IActionResult UserDashboard(LoginUser user)
         {
+            
             if (ModelState.IsValid)
             {
                 var userInDb = _context.Users.FirstOrDefault(u => u.Email == user.Email);
@@ -362,7 +363,7 @@ namespace Arcade.Controllers
         [HttpGet("/dashboardredirect/{userId}")]
         public IActionResult DashBoardRedirect(int gameId, int userId)
         {
-
+            
             var userInDb = _context.Users.FirstOrDefault(b => b.userId == userId);
             Initialize_Assoc(gameId, userId);
             return View("UserDashboard", userInDb);
@@ -370,6 +371,8 @@ namespace Arcade.Controllers
         [HttpGet("viewgame/{gameId}/{userId}")]
         public IActionResult ViewGame(int gameId, int userId)
         {
+            var ThisUser = _context.Users.FirstOrDefault(b => b.userId == userId);
+            ViewBag.ThisUser = ThisUser;
             ViewBag.AllC = _context.Comments.Include(s => s.Authors).Where(a => a.GameId == gameId);
             ViewBag.CommentsCount = _context.Comments.Count();
             ViewBag.AllComments = _context.Games.Include(x => x.Comments);

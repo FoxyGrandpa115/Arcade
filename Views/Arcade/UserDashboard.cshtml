@@ -2,7 +2,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <title>User Dashboard</title>
 </head>
 <h1>Jason's Arcade</h1>
@@ -23,14 +23,14 @@
    
 }
 <h3>Welcome @ViewBag.ThisUser.Username!</h3>
-<body id="wrap">
+<body class="p-3 mb-2 bg-dark text-white">
     
-<div class="flex">
-    <div class="navleft">
+<div class="d-flex p-2">
+    <div class="navleft" style="width: 25%;">
         <a href="/Game/@ViewBag.ThisUser.userId">New Game</a>
     </div>
-<div class="right">
-    <ul>
+<div class="d-flex justify-content-center" style="width: 75%;">
+    <ul style="width: 100%;">
         @{
             if(ViewBag.AllGamesCount != 0)
             {
@@ -41,25 +41,28 @@
                         var count = list.Count();
                         //var count_L = likes.Count();
                         //var likes_count = likes.Count();
-                    <table id="List">
+                    <table style="width: 100%;" class="table">
+                        <thead  class="p-3 mb-2 bg-dark text-white">
                     <tr>
-                        <th>Image</th>
-                        <th>Title</th>
+                        <th style="text-align: center;width: 25%">Image</th>
+                        <th style="text-align: center;width: 25%">Title</th>
                         @* <th>Short Description</th> *@
-                        <th>Likes</th> 
-                        <th>Action</th>
+                        <th style="text-align: center;width: 25%">Likes</th> 
+                        <th style="text-align: center;width: 25%">Action</th>
                     </tr>
+                    </thead>
                     <tr>
-                        <td>@{
+                        <td style="text-align: center;width: 25%">
+                            @{
                             if(@game.Imagename != null){
-                                <img class="resize" src="/img/@game.Imagename" alt="Game Image">
+                                <img style="width: 100px;height: 100px" class="resize" src="/img/@game.Imagename" alt="Game Image">
                             }
                         }
 
                         </td>
-                        <td><a href="/viewgame/@game.GameId/@ViewBag.ThisUser.userId">@game.Title</a></td>
+                        <td style="text-align: center;width: 25%"><a href="/viewgame/@game.GameId/@ViewBag.ThisUser.userId">@game.Title</a></td>
                         @* <td>@l.Description</td> maybe images can go in here *@
-                        <td>@count</td>
+                        <td  style="text-align: center;width: 25%" class="p-3 mb-2 bg-dark text-white">@count</td>
                         <td>
                             @{
                             var a = ((IEnumerable<dynamic>)game.Authors).Any(r => r.UserId == @ViewBag.ThisUser.userId);

@@ -49,6 +49,9 @@ namespace Arcade.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<int>("GameId")
                         .HasColumnType("int");
 

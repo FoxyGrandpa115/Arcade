@@ -12,8 +12,7 @@ namespace Arcade.Models
         public int CommentId { get; set; }
         public int GameId { get; set; }
         public int UserId { get; set; }
-
-
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         [Required(
         ErrorMessage = "This field is required")]
         [MinLength(2,

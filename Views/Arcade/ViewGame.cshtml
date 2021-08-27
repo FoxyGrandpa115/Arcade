@@ -8,7 +8,7 @@
 </head>
 
 <html>
-<body>
+<body class="p-3 mb-2 bg-dark text-white">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js" integrity="sha384-cn7l7gDp0eyniUwwAZgrzD06kc/tftFf19TOAs2zVinnD/C7E91j9yyk5//jjpt/" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -18,14 +18,15 @@
 
 
 <div id="View">
-<h1>@ViewBag.Game.Title
+<h1 class="text-center">@ViewBag.Game.Title
 </h1>
 <br>
-@{
+<p class="text-center">@{
     if(@ViewBag.Game.Imagename != null){
         <img style="width: 800px; height: 800px" class="basesize" src="/img/@ViewBag.Game.Imagename" alt="Game Image">
     }
 }
+</p>
 <h4>
 <br>Description:</h4>
 <p>@ViewBag.Game.Description</p>
@@ -33,18 +34,24 @@
 <h2>Updated on: @ViewBag.Game.UpdatedAt</h2>
 <h3>Likes:
     @{
-        if(ViewBag.PlayersCount != 0){
+        if(ViewBag.PlayersCount != 0 && ViewBag.PlayersCount < 5){
     @foreach(var player in ViewBag.Players)
-    {
-        
-        <li>@player.User.FirstName </li>
-        @if(player.User == ViewBag.User)
+    {     
+        @if(player.User.userId == @ViewBag.Game.UserId)
         {
-            <p>(Author)</p>
+            <li class="text-danger">@player.User.FirstName (Author)</li>
+        }else if(player.User == ViewBag.ThisUser){
+            <li class="text-success">@player.User.FirstName (You)</li>
+        }
+        else{
+            <li>@player.User.FirstName </li>
         }
     }
-        }else{
+        }else if(ViewBag.PlayersCount == 0){
             <h3>No likes :(</h3>
+        }else{
+            @ViewBag.PlayersCount
+            <br>
         }
         
        
@@ -71,21 +78,23 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="userComments">
-                    <div class="comment">
-                        <div class="user"><span class="time"></span></div>
-                        <div class="userComment">
-                            @{
+                    <div class="comment">                      
+                        
+@{
                                 if(ViewBag.CommentsCount != 0){
                             @foreach(var comment in ViewBag.AllC)
-                            {                                
+                            {       
+                                <div class="p-3 mb-2 bg-secondary text-white">          
+                                <div class="userComment">               
                                 <p>"@comment.comment"</p> 
-                                <p>Written by: @comment.name</p>
+                                </div>
+                                <div class="user"><span class="time"></span><p style="text-align: right; text-style: italic;font-size:12pt" class="text-right"><i>Written by @comment.name on: <br>@comment.CreatedAt.ToString("MMMM dd, yyyy hh:mm tt")</i></p></div>
+                                </div>
                             }
                                 }else{
                                     <h3>No comments :(</h3>
                                 }
-                            }
-                        </div>
+                            }                        
                     </div>
                 </div>
             </div>
