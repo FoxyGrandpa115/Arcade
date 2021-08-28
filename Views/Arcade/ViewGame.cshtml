@@ -42,6 +42,9 @@
         @if(player.User.userId == @ViewBag.Game.UserId)
         {
             <li class="text-danger">@player.User.FirstName (Author)</li>
+            if(player.User == ViewBag.ThisUser){
+                f = true;
+            }
         }else if(player.User == ViewBag.ThisUser){
             <li class="text-success">@player.User.FirstName (You)</li>
             f = true;
