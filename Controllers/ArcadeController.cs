@@ -75,7 +75,7 @@ namespace Arcade.Controllers
             ViewData["returning"] = returning;
             ViewData["AllLikes"] = _context.Games.Include(x => x.Likes);
 
-            Console.WriteLine(returning);
+            // Console.WriteLine(returning);
         }
         public void Initialize_G(Game game, int userId)//varaibles and viewbags for hobbies
         {
@@ -260,12 +260,12 @@ namespace Arcade.Controllers
                     var filePath = Path.Combine(uploads, uniqueFileName);
                     game.Image.CopyTo(new FileStream(filePath, FileMode.Create));
                     game.Imagename = uniqueFileName;
-                    Console.WriteLine("Image Saved!");
+                    // Console.WriteLine("Image Saved!");
                     //to do : Save uniqueFileName  to your db table   
                 }
 
                 //adding game
-                Console.WriteLine(game.Title);
+                // Console.WriteLine(game.Title);
                 _context.Add(game);
                 _context.SaveChanges();
                 ViewBag.Game = game;
@@ -316,8 +316,8 @@ namespace Arcade.Controllers
             ViewData["Comment"] = content;
             //list.Add(content);
 
-            Console.WriteLine(content);
-            Console.WriteLine(commentlist.LastOrDefault());
+            // Console.WriteLine(content);
+            // Console.WriteLine(commentlist.LastOrDefault());
             //game.Comments.Add(game.Comments.Last());
             _context.SaveChanges();
             return RedirectToAction("ViewGame");
@@ -329,7 +329,7 @@ namespace Arcade.Controllers
             var ThisUser = _context.Users.FirstOrDefault(b => b.userId == userId);
             ViewBag.ThisUser = ThisUser;
             Initialize_G(game, userId);
-            Console.WriteLine("edit");
+            // Console.WriteLine("edit");
             Game model = _context.Games.FirstOrDefault(h => h.GameId == gameId);
             if (model == null)
                 return RedirectToAction("Index");
@@ -346,7 +346,7 @@ namespace Arcade.Controllers
             User userUpdate = _context.Users.FirstOrDefault(h => h.userId == userId);
             if (ModelState.IsValid)
             {
-                Console.WriteLine("valid model state");
+                // Console.WriteLine("valid model state");
                 gameUpdate.Title = game.Title;
                 gameUpdate.Description = game.Description;
                 if (game.Imagename != null)
@@ -404,7 +404,7 @@ namespace Arcade.Controllers
                 if (authors.Any(u => u.UserId == user.userId))
                 {
                     //ModelState.AddModelError("Username", "Username already registered");
-                    Console.WriteLine("Already liked this game");
+                    // Console.WriteLine("Already liked this game");
                     return View("ViewGame");//going back to start
                 }
                 else
@@ -418,7 +418,7 @@ namespace Arcade.Controllers
             else if (status == "com_delete")
             {
                 //Removing the comment from the database
-                Console.WriteLine("Comment deleted");
+                // Console.WriteLine("Comment deleted");
                 _context.Comments.Remove(comment_);
                 _context.SaveChanges();
             }
@@ -433,8 +433,8 @@ namespace Arcade.Controllers
                 if (likes.Any(u => u.UserId == user.userId))
                 {
                     //ModelState.AddModelError("Username", "Username already registered");
-                    Console.WriteLine("Already liked this game");
-                    Console.WriteLine(likes);
+                    // Console.WriteLine("Already liked this game");
+                    // Console.WriteLine(likes);
                     return View("ViewGame");//going back to start
                 }
                 else
@@ -442,7 +442,7 @@ namespace Arcade.Controllers
             }
             else if (status == "comment")
             {
-                Console.WriteLine("Comment added");
+                // Console.WriteLine("Comment added");
                 ViewBag.Comment = comment;
                 AddComment(gameId, userId);
             }
