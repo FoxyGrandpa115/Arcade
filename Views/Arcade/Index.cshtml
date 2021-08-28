@@ -15,39 +15,40 @@
 </nav>
 <body class="p-3 mb-2 bg-dark text-white">
     <div class="d-flex justify-content-center">
-        <div class="box">
+        <div style="width: 37em;">
+            
             <h4>Register</h4>
         <form asp-action="Register" asp-controller="Arcade" method="post">
         <span asp-validation-for="FirstName"></span>
         <label asp-for="FirstName">First Name</label>
-        <input asp-for="FirstName"><br>
+        <input class="d-flex justify-content-evenly" asp-for="FirstName"><br>
         <span asp-validation-for="LastName"></span>
         <label asp-for="LastName">Last Name</label>
-        <input asp-for="LastName"><br>
+        <input class="d-flex justify-content-evenly" asp-for="LastName"><br>
         <span asp-validation-for="Username"></span>
         <label asp-for="Username">Username</label>
-        <input asp-for="Username"><br>
+        <input class="d-flex justify-content-evenly" asp-for="Username"><br>
         <span asp-validation-for="Email"></span>
         <label asp-for="Email">Email</label>
-        <input asp-for="Email"><br>
+        <input class="d-flex justify-content-evenly" asp-for="Email"><br>
         <span asp-validation-for="Password"></span>
         <label asp-for="Password">Password</label>
-        <input asp-for="Password"><br>
+        <input class="d-flex justify-content-evenly" asp-for="Password"><br>
         <span asp-validation-for="ConfirmPassword"></span>
         <label asp-for="ConfirmPassword">Confirm Password</label>
-        <input asp-for="ConfirmPassword"><br>
+        <input class="d-flex justify-content-evenly" asp-for="ConfirmPassword"><br>
         <input value="Sign Up" type="submit">    
         </form>
         </div>
-        <div class="box">
+        <div style="width: 37em;">
             <h4>Login</h4>
         <form asp-action="Login" asp-controller="Arcade" method="post">
         <span asp-validation-for="Email"></span>
         <label asp-for="Email">Email</label>
-        <input asp-for="Email"><br>
+        <input class="d-flex justify-content-evenly" asp-for="Email"><br>
         <span asp-validation-for="Password"></span>
         <label asp-for="Password">Password</label>
-        <input asp-for="Password"><br>
+        <input class="d-flex justify-content-evenly" asp-for="Password"><br>
         <input value="Login" type="submit">   
         </form>
             

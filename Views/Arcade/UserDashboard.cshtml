@@ -27,7 +27,7 @@
     
 <div class="d-flex p-2">
     <div class="navleft" style="width: 25%;">
-        <a href="/Game/@ViewBag.ThisUser.userId">New Game</a>
+        <a href="/Game/@ViewBag.ThisUser.userId"><button  class="btn-success btn">New Game</button></a>
     </div>
 <div class="d-flex justify-content-center" style="width: 75%;">
     <ul style="width: 100%;">
@@ -60,25 +60,27 @@
                         }
 
                         </td>
-                        <td style="text-align: center;width: 25%"><a href="/viewgame/@game.GameId/@ViewBag.ThisUser.userId">@game.Title</a></td>
+                        <td style="text-align: center;width: 25%"><p class="p-3 mb-2 bg-dark text-white">@game.Title</p>
+                            <a href="/viewgame/@game.GameId/@ViewBag.ThisUser.userId"><button  class="btn btn-info">View Game</button></a>
+                        </td>
                         @* <td>@l.Description</td> maybe images can go in here *@
                         <td  style="text-align: center;width: 25%" class="p-3 mb-2 bg-dark text-white">@count</td>
-                        <td>
+                        <td  style="text-align: center;width: 25%">
                             @{
                             var a = ((IEnumerable<dynamic>)game.Authors).Any(r => r.UserId == @ViewBag.ThisUser.userId);
 
                             if(game.UserId == ViewBag.ThisUser.userId)
                             {
-                                <a asp-action="RSVP" asp-route-gameId="@game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="delete">DELETE</a>
-                                <a href="/@game.GameId/@ViewBag.ThisUser.userId/edit">EDIT</a>
+                                <a asp-action="RSVP" asp-route-gameId="@game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="delete"><button style="margin-top: 30px;" class="btn-danger btn">Delete</button></a>
+                                <a href="/@game.GameId/@ViewBag.ThisUser.userId/edit"><button style="margin-top: 30px;" class="btn-warning btn">Edit</button></a>
                             }
                              else if(a)   @*(l.Associations.Any(r => r.UserId == ViewBag.ThisUser.UserId)) *@
                             {
-                                <a asp-action="RSVP" asp-route-gameId="@game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="remove">Remove Like</a>
+                                <a  asp-action="RSVP" asp-route-gameId="@game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="remove"><button style="margin-top: 30px;" class="btn-light btn">Remove Like</button></a>
                             }
                             else
                             {                                
-                                <a asp-action="RSVP" asp-route-gameId="@game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="add">Like</a>
+                                <a asp-action="RSVP" asp-route-gameId="@game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="add"><button style="margin-top: 30px;" class="btn-light btn">Like</button></a>
                             }
                             }
                         </td>

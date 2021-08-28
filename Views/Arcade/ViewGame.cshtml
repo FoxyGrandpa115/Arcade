@@ -34,6 +34,8 @@
 <h2>Updated on: @ViewBag.Game.UpdatedAt</h2>
 <h3>Likes:
     @{
+        bool f = new bool();
+        f = false;
         if(ViewBag.PlayersCount != 0 && ViewBag.PlayersCount < 5){
     @foreach(var player in ViewBag.Players)
     {     
@@ -42,6 +44,7 @@
             <li class="text-danger">@player.User.FirstName (Author)</li>
         }else if(player.User == ViewBag.ThisUser){
             <li class="text-success">@player.User.FirstName (You)</li>
+            f = true;
         }
         else{
             <li>@player.User.FirstName </li>
@@ -55,10 +58,15 @@
         }
         
        
-    <a asp-action="RSVP" asp-route-gameId="@ViewBag.Game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="remove">Remove Like</a>
+       @if(f == true){
+            <a asp-action="RSVP" asp-route-gameId="@ViewBag.Game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="remove"><button  class="btn-light btn">Remove Like</button></a>
+    <br>    <br>
+       }else{
+           <a asp-action="RSVP" asp-route-gameId="@ViewBag.Game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="add"><button  class="btn-light btn">Like</button></a>
     <br>
-    <a asp-action="RSVP" asp-route-gameId="@ViewBag.Game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="add">Like</a>
-    <br>
+       }
+    
+    
     @* <a asp-action="RSVP" asp-route-gameId="@ViewBag.Game.GameId" asp-route-userId="@ViewBag.ThisUser.userId" asp-route-status="comment">Comment</a> *@
     }
     <br>

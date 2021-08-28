@@ -6,29 +6,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
     <title>Edit Game</title>
 </head>
-<body id="wrap">
+<body class="p-3 mb-2 bg-dark text-white">
     <a href="/dashboardredirect/@ViewBag.ThisUser.userId">Dashboard</a>
     <form asp-action="update" asp-controller= "Arcade" method="POST">
-<div class="form-group">
+<div class="text-center">
         <span asp-validation-for="Title"></span>
         <label asp-for="Title"></label>
         <input asp-for="Title">
     </div>
-    <div class="form-group">
+    <div class="text-center">
         <span asp-validation-for="Description"></span>
         <label asp-for="Description"></label>
         <textarea asp-for="Description"name="Description" id="Description" cols="30" rows="10"></textarea>
     </div>
-       <div class="form-group">
+       <div class="text-center">
         <label asp-for="Image"></label>
         <input asp-for="Image"/>        
     </div>
     <input type="hidden" asp-for="UserId" value="@ViewBag.ThisUser.userId">
 
-    <input type="submit" value="Edit">
+    <div class="d-flex justify-content-center"><button type="submit" class="btn-success btn">Edit!</button></div>
 </form> 
 </body>
 </html>

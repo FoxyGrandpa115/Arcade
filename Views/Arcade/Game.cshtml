@@ -15,21 +15,23 @@
 
 @model Game
 <form asp-action="creategame" method="post" enctype="multipart/form-data">
-    <div class="form-group">
+    <div class="text-center">
         <span asp-validation-for="Title"></span>
         <label asp-for="Title"></label>
         <input asp-for="Title">
     </div>
-    <div class="form-group">
+    <div class="text-center">
         <span asp-validation-for="Description"></span>
         <label asp-for="Description"></label>
         <textarea asp-for="Description"name="Description" id="Description" cols="30" rows="10"></textarea>
     </div>
-       <div class="form-group">
+       <div class="text-center">
         <label asp-for="Image"></label>
         <input asp-for="Image"/>        
     </div>
     <input type="hidden" asp-for="UserId" value="@ViewBag.ThisUser.userId">
-    <input type="submit" value="Create">
+    <br>
+    <div class="d-flex justify-content-center"><button type="submit" class="btn-success btn">Create!</button></div>
+    
 </form> 
 </body>
