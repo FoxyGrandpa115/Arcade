@@ -14462,6 +14462,11 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\jason\\Documents\\WOS Enterprises\\HW Assignments\\Arcade\\Views\\Arcade\\Dojodachi.cshtml",
+      "TargetPath": "Views\\Arcade\\Dojodachi.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\jason\\Documents\\WOS Enterprises\\HW Assignments\\Arcade\\Views\\_ViewImports.cshtml",
       "TargetPath": "Views\\_ViewImports.cshtml",
       "FileKind": "mvc"

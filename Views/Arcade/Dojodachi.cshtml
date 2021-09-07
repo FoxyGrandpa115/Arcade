@@ -1,0 +1,34 @@
+
+@using System.Linq
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style0.css"/>
+    <title>Playtime</title>
+</head>
+
+<h1>Dojodachi</h1>
+<body id="wrap">
+    <div class="box">
+        Happiness: @ViewBag.Happiness | Fullness: @ViewBag.Fullness | Meal(s): @ViewBag.Meal | Energy: @ViewBag.Energy<br>
+        <img class="img" src="/img/dojodachi.png" alt="Your pet!">
+        @if(ViewBag.Happiness <= 0 || ViewBag.Fullness <=0){
+            <p class="red">You lose....</p>
+            <a href='http://localhost:5000/clear'><button action="Index">Restart</button></a>
+        }
+        @if(ViewBag.Happiness >= 100 && ViewBag.Fullness >= 100 && ViewBag.Energy >= 100){
+            <p class="red">You Win!</p>
+            <a href='http://localhost:5000/clear'><button action="Index">Restart</button></a>
+        }
+        <br>@ViewBag.Message<br>
+    </div>
+     <div>
+        <a href='http://localhost:5000/feed'><button action="Feed">Feed</button></a>
+        <a href='http://localhost:5000/play'><button type="submit" action="Play">Play</button></a>
+        <a href='http://localhost:5000/work'><button type="submit" action="Work">Work</button></a>
+        <a href='http://localhost:5000/sleep'><button type="submit" action="Sleep">Sleep</button></a>
+     </div>
+</body>
+
